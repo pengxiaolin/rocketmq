@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.lxy</groupId>
+    <artifactId>message</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <spring.version>4.3.10.RELEASE</spring.version>
+        <logback-ext-spring.version>0.1.4</logback-ext-spring.version>
+        <slf4j.version>1.7.25</slf4j.version>
+        <logback.version>1.2.3</logback.version>
+        <javax.mail.version>1.6.0</javax.mail.version>
+        <commons-lang.version>2.6</commons-lang.version>
+        <rocketmq.version>4.2.0</rocketmq.version>
+        <slf4j-api.version>1.7.21</slf4j-api.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.6.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.6.6</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-client</artifactId>
+            <version>${rocketmq.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>4.3.8.RELEASE</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>4.3.8.RELEASE</version>
+        </dependency>
+
+    </dependencies>
+    <build>
+        <finalName>lxy-${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>utf8</encoding>
+                    <!-- 调试标志的设置 -->
+                    <debug>true</debug>
+                    <debuglevel>lines,vars,source</debuglevel>
+                    <showDeprecation>true</showDeprecation>
+                    <showWarnings>true</showWarnings>
+                    <!-- 对编译器的设置 -->
+                    <fork>true</fork>
+                    <meminitial>64m</meminitial>
+                    <maxmem>512m</maxmem>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <!-- 指定Main方法入口的class -->
+                            <mainClass>com.lxy.house.app.Application</mainClass>
+                            <!-- 在jar包的MANIFEST.MF文件中生成Class-Path属性 -->
+                            <addClasspath>true</addClasspath>
+                            <!-- Class-Path 前缀 -->
+                            <classpathPrefix>lib/</classpathPrefix>
+                        </manifest>
+                        <!-- 把本地的第三方jar包添加到MANIFEST.MF文件中,可以解压打包后的jar包查看MANIFEST.MF文件 -->
+                        <!-- Class-Path: 指定当前jar包执行所依赖的classpath,包括本地的第三方jar包和maven引入的jar包
+                            Class-Path: lib/slf4j-api-1.7.13.jar lib/junit-3.8.1.jar Main-Class: 指定当前jar包的入口class
+                            Main-Class: com.birdben.App -->
+                        <!-- <manifestEntries>
+                            <Class-Path>lib/slf4j-api-1.7.13.jar</Class-Path>
+                        </manifestEntries> -->
+                    </archive>
+                </configuration>
+            </plugin>
+            <!-- 拷贝依赖的jar包到lib目录 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <!-- ${project.build.directory} 构建目录，缺省为target -->
+                            <outputDirectory>
+                                ${project.build.directory}/lib
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

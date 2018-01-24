@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 每个模块只需要配置一个 consumer -->
+    <bean id="consumer" class="com.lxy.rocketmq.service.impl.RocketMqConsumerImpl" init-method="afterPropertiesSet"
+          destroy-method="destroy">
+        <property name="namesrvAddr" value="${rocketmq.namesrv}"/>
+        <property name="consumerGroup" value="LOANSYS"/>
+        <!-- 消费方式：BROADCASTING 广播消费，CLUSTERING 集群消费 -->
+        <property name="messageModel" value="BROADCASTING"/>
+        <!-- CONCURRENTLY 无序消费  ORDERLY 有序消费 -->
+        <property name="messageListener" value="CONCURRENTLY"/>
+        <property name="handlermap">
+            <map>
+                <entry key="loanRequest"> <!-- topic-->
+                    <bean class="com.lxy.rocketmq.ExampleRequestConsumer">
+                       <!-- <property name="classTypeName" value="com.lxy.rocketmq.MQEntity"></property>--> <!-- 默认为基类 com.lxy.rocketmq.MQEntity -->
+                       <property name="classTypeName" value="com.lxy.rocketmq.ExampleRequest"></property> <!-- 默认为基类 com.lxy.rocketmq.MQEntity -->
+                        <!--<property name="tags" value="test1"></property>--> <!-- 标签 如果不配的话 默认消费该topic下的所有-->
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 每个模块只需要配置一个 producer -->
+    <bean id="producer" class="com.lxy.rocketmq.service.impl.RocketMqProducerImpl" init-method="afterPropertiesSet"
+          destroy-method="destroy">
+        <property name="producerGroup" value="LOANSYS"></property>
+        <property name="namesrvAddr" value="${rocketmq.namesrv}"></property>
+        <property name="retryAnotherBrokerWhenNotStoreOK"
+                  value="${rocketmq.retryAnotherBrokerWhenNotStoreOK}"></property>
+    </bean>
+    <bean id="exampleSendCallback" class="com.lxy.rocketmq.service.ExampleSendCallback"></bean> <!-- 回调函数-->
+</beans>

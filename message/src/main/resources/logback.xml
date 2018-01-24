@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+ 	<substitutionProperty name="log.base" value="lxy" />
+	<substitutionProperty name="log.moudle" value="rocketMq" />
+    <!-- 控制台输出 -->   
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">   
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>   
+        </layout>   
+    </appender>   
+       
+    <!-- 按照每天生成日志文件  7天一个周期对日志文件进行清理-->   
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">   
+            <FileNamePattern>/var/logs/${log.base}/${log.moudle}/manage.%d{yyyy-MM-dd}.log</FileNamePattern>   
+            <MaxHistory>7</MaxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">   
+            <pattern>%-16(%d{MM-dd HH:mm:ss.SSS}) %-5thread %-5level %logger{1} - %msg%n</pattern>   
+       </layout>   
+    </appender>
+
+    <logger name="jdbc.sqlonly" level="WARN">
+        <appender-ref ref="FILE" />
+    </logger>
+    <logger name="org.dozer" level="WARN">
+        <appender-ref ref="FILE" />
+    </logger>
+    <logger name="jdbc.sqltiming" level="INFO">
+        <appender-ref ref="FILE" />
+    </logger>
+    <logger name="jdbc.audit" level="ERROR">
+        <appender-ref ref="FILE" />
+    </logger>
+    <logger name="jdbc.resultset" level="ERROR">
+        <appender-ref ref="FILE" />
+    </logger>
+    <logger name="jdbc.connection" level="ERROR">
+        <appender-ref ref="FILE" />
+    </logger>
+
+    <logger name="org.springframework" level="warn" />
+	<logger name="org.apache.ibatis" level="warn" />
+	<logger name="org.mybatis" level="warn" />
+  	<logger name="org.apache.zookeeper" level="warn" />  	
+  	<logger name="com.alibaba.dubbo" level="error" />
+  	<logger name="druid.sql.Connection" level="info" />
+  	<logger name="druid.sql.Statement" level="info" />
+  	<logger name="druid.sql.ResultSet" level="info" />
+  	
+  	<logger name="com.lxy.manage" level="info" />
+  	<logger name="com.lxy.manage.dao" level="info"  />
+  	
+    <root level="info">
+    	<appender-ref ref="STDOUT" />
+    	<appender-ref ref="FILE" />
+    </root>   
+</configuration>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment>开发环境配置中心</comment>
+        <!-- 数据源 -->
+    <entry key="rocketmq.namesrv">172.18.84.207:9876</entry>
+    <entry key="rocketmq.retryAnotherBrokerWhenNotStoreOK">true</entry>
+</properties>
+
