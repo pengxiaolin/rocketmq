@@ -13,5 +13,4 @@ rocket安装与配置
 8. 需指定broker服务的路由服务的地址 在具体的配置文件中添加参数
  namesrvAddr=172.18.84.207:9876
 
- 常用命令
- http://m635674608.iteye.com/blog/2299240
+ 参考常用命令 http://m635674608.iteye.com/blog/2299240
